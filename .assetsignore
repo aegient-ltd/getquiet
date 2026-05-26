@@ -1,0 +1,10 @@
+# Standard exclusions (Pages used to do this automatically; Workers Assets doesn't)
+.git
+.gitignore
+.assetsignore
+node_modules
+.DS_Store
+.wrangler
+
+# Internal docs not meant for public serving
+DESIGN.md
