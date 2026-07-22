@@ -289,8 +289,9 @@ These are product constraints, not style preferences. They must be enforced in e
 - **No email body in manager view.** The family manager cannot see the body of emails belonging to the protected person.
 - **No raw threat score.** Do not surface numeric threat scores (`threat_score`, dimension values) in the manager view. Plain English threat reason (`threat_reason`) and humanised signal labels are the correct outputs.
 - **No links or attachments.** Do not render or link to any URL extracted from the protected person's email in the manager view.
+  - *Narrow carve-out (ADL-171 §3.2/§3.7, TASK-070 — the source-unsubscribe verb).* The `List-Unsubscribe` header link on a **benign-commercial** sender may be surfaced to the **manager only**, on the manager's own unsubscribe action, when that sender offers only a plain web-page unsubscribe (the mute-only fallback). It is a header-derived action affordance the competent adult manager chooses to open — not email-body content — and is rendered clearly labelled ("Open unsubscribe page"). It is **never** shown to the protected person (clicking would confirm a vulnerable person's address is live). This is the sole documented exception; it does not generalise to any other URL, and it never applies to a review/block-flagged sender.
 
-These rules apply unconditionally. They are not toggleable and are not gated behind any flag.
+These rules apply unconditionally, save the single documented ADL-171 carve-out above. They are not toggleable and are not gated behind any flag.
 
 ---
 
