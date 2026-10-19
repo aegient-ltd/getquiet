@@ -723,3 +723,50 @@ footer a { color: var(--ink-soft); }
   /* Form taller on mobile — fields stack more on small screens */
   .tally-embed { height: 3000px !important; }
 }
+
+/* ── PRIVACY NOTICE PAGE (.card.legal) ──
+   Long-form legal document rendering for privacy.html (TASK-106). The body
+   is converted from the quiet repo's docs/quiet_privacy_notice.md; these
+   rules only shape what the card styles above do not cover: numbered
+   section headings in sequence, nested lists, and the section 5 purposes
+   table. */
+.legal h2 {
+  margin-top: 28px;
+  font-size: 1.35rem;
+}
+.legal h2:first-of-type { margin-top: 0; }
+.legal h3 {
+  margin-top: 18px;
+  font-size: 1.05rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
+.legal ul {
+  margin: 0 0 14px 1.2rem;
+}
+.legal ul li {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.legal ul li p { margin-bottom: 4px; }
+.legal table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 18px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.legal table td {
+  border: 1px solid var(--rule);
+  padding: 8px 10px;
+  vertical-align: top;
+}
+.legal table tr:first-child td {
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--bg);
+}
+/* Phone width: the three-column table scrolls inside the card rather than
+   breaking the page. */
+.legal .table-scroll { overflow-x: auto; }
