@@ -8,3 +8,6 @@ node_modules
 
 # Internal docs not meant for public serving
 DESIGN.md
+
+# Brand source images and their generator (the served share card is copied to assets/social/)
+brand
