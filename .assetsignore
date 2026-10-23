@@ -11,3 +11,11 @@ DESIGN.md
 
 # Brand source images and their generator (the served share card is copied to assets/social/)
 brand
+
+# Retired from the deploy at TASK-107 (decision 536); kept in the repository.
+# Their URLs 301 to / via _redirects.
+prototypes.html
+logo-concepts.html
+ui/
+assets/docs/
+assets/audio/

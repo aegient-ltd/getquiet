@@ -1,5 +1,2 @@
-/assets/audio/intro.mp3
-  Content-Type: audio/mpeg
-
-/assets/audio/intro.m4a
-  Content-Type: audio/mp4
+# Intentionally empty since TASK-107: the two audio Content-Type entries left
+# with assets/audio/ retired from the deploy (.assetsignore).

@@ -1,0 +1,9 @@
+# Retired at TASK-107 (decision 536): these items left the deploy via
+# .assetsignore and their URLs permanently redirect to the home page
+# (operator-confirmed at the Build plan-check). Static rules first,
+# then splats, per the Workers static assets _redirects documentation.
+/prototypes.html / 301
+/logo-concepts.html / 301
+/ui/* / 301
+/assets/docs/* / 301
+/assets/audio/* / 301
