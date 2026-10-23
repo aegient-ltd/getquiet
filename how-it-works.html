@@ -3,13 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How Quiet Works</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>How Quiet Protect works | Quiet Protect</title>
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="A plain-English explanation of how Quiet Protect decides what to deliver, what to hold back for you, and what to block." />
+  <link rel="canonical" href="https://getquiet.co.uk/how-it-works" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Quiet" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:url" content="https://getquiet.co.uk/how-it-works" />
+  <meta property="og:title" content="How Quiet Protect works | Quiet Protect" />
+  <meta property="og:description" content="A plain-English explanation of how Quiet Protect decides what to deliver, what to hold back for you, and what to block." />
+  <meta property="og:image" content="https://getquiet.co.uk/assets/social/quietprotect-share-1200x630.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Quiet Protect. Email protection for older and vulnerable people, with family in the loop. getquiet.co.uk" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body>
 
@@ -20,128 +30,133 @@
         <span></span><span></span><span></span>
       </button>
       <div class="nav-links">
-        <a href="/how-it-works.html" class="active">How it works</a>
         <a href="/quiet-protect.html">Quiet Protect</a>
-        <a href="/quiet.html">Quiet</a>
+        <a href="/how-it-works.html" class="active">How it works</a>
         <a href="/about.html">About</a>
-        <a href="https://tally.so/r/0QJkjy" class="nav-cta" target="_blank" rel="noopener">Get access</a>
       </div>
     </div>
   </nav>
 
   <header class="page-header fade-up">
-    <p class="section-label">Quiet Protect</p>
-    <h1 class="page-title">How the scoring engine works</h1>
-    <p class="page-subtitle">A plain English explanation of how Quiet Protect decides what to block, what to review, and what to deliver.</p>
+    <span class="pill-tag protect-tag">Quiet Protect</span>
+    <h1 class="page-title">How Quiet Protect works</h1>
+    <p class="page-subtitle">A plain-English explanation of how Quiet Protect decides what to deliver, what to hold back for you, and what to block.</p>
   </header>
 
   <hr class="divider" />
 
   <main>
 
-    <!-- WHY AI -->
     <div class="how-section fade-up d1">
-      <h2>Why AI, not a rules engine</h2>
-      <p class="lead">The obvious approach to blocking scam emails is a list of rules: flag anything claiming to be HMRC, block links to domains that look suspicious, catch emails with urgent language. Rules engines are fast, cheap, and predictable. For Quiet Protect, they are also insufficient.</p>
-      <p>Email fraud is adversarial. The patterns that make a scam effective are specifically designed to appear legitimate... the calm tone of a routine letter, the plausible domain name that falls just short of the official one, the absence of deadline pressure that makes a bank detail request seem like routine administration. A rules engine catches the obvious cases. It cannot reason about context.</p>
-      <p>What matters in Quiet Protect is not whether a signal is present in isolation, but what it means in context. A payment request from a known tradesperson with four prior contacts is routine. The same payment request from an unknown sender with no history is suspicious. The same email, two completely different risk profiles.</p>
-      <p>This contextual reasoning is exactly what large language models do well. The scoring engine powering Quiet Protect approaches each email as a reasoning task rather than a pattern-matching task. It weighs signals against sender history, header validation, the stated purpose of the email, and the combination of signals present. This produces better accuracy on the cases that matter most.</p>
+      <h2>Why an AI, and not just a list of rules</h2>
+      <p>The obvious way to stop scam emails is a list of rules: flag anything claiming to be HMRC, block links to lookalike websites, and catch urgent language. Rules are fast and predictable, but on their own they aren’t enough.</p>
+      <p>Scams are written to look genuine: the calm tone of a routine letter, a web address one letter off the real one, a request for bank details with no deadline. What matters is not whether a warning sign is there, but what it means in context. A payment request from a tradesperson who has written four times before is routine. The same request from someone who has never written before is suspicious.</p>
+      <p>So Quiet treats each email as a reasoning task. An AI model weighs what the email asks for against who sent it, their history with the person you protect, and the results of checks on where the email really came from. On top of that, fixed safety rules can only make the outcome more cautious, never less.</p>
     </div>
 
-    <!-- THE FIVE DIMENSIONS -->
     <div class="how-section fade-up d2">
-      <h2>Five threat dimensions</h2>
-      <p>Every incoming email is assessed across five dimensions.</p>
-
-      <table class="dimension-table">
-        <thead>
-          <tr>
-            <th>Dimension</th>
-            <th>What it looks for</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="dim-name">Impersonation</td>
-            <td class="dim-desc">False sender identity, domain lookalikes, authority spoofing (HMRC, NHS, banks), mismatched headers</td>
-          </tr>
-          <tr>
-            <td class="dim-name">Urgency and pressure</td>
-            <td class="dim-desc">Time pressure and fear tactics designed to override rational thinking, deadlines, threats of consequences, account suspension language</td>
-          </tr>
-          <tr>
-            <td class="dim-name">Action requested</td>
-            <td class="dim-desc">What the email is asking the recipient to do. Click a login link, provide bank details, pay an invoice, share personal information</td>
-          </tr>
-          <tr>
-            <td class="dim-name">Structural signals</td>
-            <td class="dim-desc">Construction-level anomalies, mismatched links, unusual send times, generic salutations, reply-to mismatches</td>
-          </tr>
-          <tr>
-            <td class="dim-name">Vulnerable person context</td>
-            <td class="dim-desc">Patterns specifically effective against elderly adults. Secrecy instructions, unsolicited prize or inheritance notifications, tech support scams, unexpected personal contact</td>
-          </tr>
-        </tbody>
-      </table>
-
+      <h2>Five things it looks at</h2>
+      <p>Every new email is assessed in five ways.</p>
+      <div class="table-box">
+        <table class="dimension-table">
+          <thead>
+            <tr>
+              <th>What it checks</th>
+              <th>What it looks for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="dim-name">Pretending to be someone</td>
+              <td class="dim-desc">Claiming to be a bank, a government department, a delivery firm or a well-known online service; lookalike web addresses; a display name that doesn’t match where the email really came from</td>
+            </tr>
+            <tr>
+              <td class="dim-name">Pressure</td>
+              <td class="dim-desc">Deadlines, threats of fines or account suspension, false security alerts, and fear or guilt used to rush a decision</td>
+            </tr>
+            <tr>
+              <td class="dim-name">What it asks them to do</td>
+              <td class="dim-desc">Log in through a link, hand over bank or card details, send money to new bank details, pay by gift card or cryptocurrency, call an unknown number, or share personal details</td>
+            </tr>
+            <tr>
+              <td class="dim-name">How it is put together</td>
+              <td class="dim-desc">Links that go somewhere other than they say, QR codes in place of links, a reply address that differs from the sender, “Dear Customer” greetings, attachments from someone new</td>
+            </tr>
+            <tr>
+              <td class="dim-name">Tricks aimed at vulnerable people</td>
+              <td class="dim-desc">Prizes and inheritances out of the blue, fake computer support, a relative in trouble asking for money, unexpected romance, and any request to keep the email secret from family</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <!-- THE REVIEW ZONE -->
     <div class="how-section fade-up d3">
-      <h2>The Review zone</h2>
-      <p>The scoring engine routes every email to one of three outcomes: Deliver, Review, or Block. Emails in the middle... plausible enough not to block, suspicious enough not to deliver, are held for the family manager rather than forced to a binary decision by an AI.</p>
-
-      <div class="callout protect-callout">
-        An AI scoring engine will always produce some errors on genuinely ambiguous cases. In a safety product, those errors are asymmetric: a false positive (blocking a legitimate email) creates friction. A false negative (delivering a scam) can cause serious financial harm. The Review zone is honest about uncertainty rather than hiding it.
-      </div>
-
-      <p>The family manager reviewing a flagged email is in a far better position than any algorithm to know whether their parent was expecting a document from a particular sender, or whether an invoice for work they've never heard of sounds right. The Review zone exists to give that judgement its proper place.</p>
-      <p>The engine also uses its own confidence level as a tiebreaker in ambiguous boundary cases. A score of 20 with high confidence routes to Deliver. The same score with medium confidence routes to Review. How certain the engine is, not just what it scores, shapes the outcome.</p>
+      <h2>Deliver, hold back or block</h2>
+      <p>Every email ends up in one of three places. Safe email is delivered. Clear scams are blocked. Emails in between that are plausible enough not to block but suspicious enough not to deliver are held back for you to look at, rather than being forced into a yes-or-no decision by an AI.</p>
+      <p>Mistakes in a safety product are not equal. Holding back a genuine email is a nuisance. Delivering a scam can cost someone their savings. So when Quiet is unsure, it holds the email back. You know whether your parent was expecting a document from that sender. Quiet doesn’t.</p>
+      <p>Quiet also considers how sure it is. Near the line between delivering and holding back, or between holding back and blocking, an email Quiet is less sure about goes the more cautious way. Blocked emails stay in your dashboard too, so you can release one if Quiet got it wrong.</p>
     </div>
 
-    <!-- WHAT THE FAMILY MANAGER SEES -->
+    <div class="how-section fade-up d3">
+      <h2>Rules that always apply</h2>
+      <p>Whatever the AI concludes, some emails are always held back or blocked:</p>
+      <ul class="points">
+        <li>An email that fails the checks on its origin is held back, regardless of what it claims to be.</li>
+        <li>An email claiming to be from an organisation, such as a bank or a government department, is held back if Quiet can’t confirm it really comes from them.</li>
+        <li>A request to send a payment to new or changed bank details is held back, even if it comes from someone they know.</li>
+        <li>An email requesting bank details or a combination of personal details such as a National Insurance number, date of birth, and address is blocked.</li>
+        <li>A prize or inheritance from someone who has never written before is blocked.</li>
+        <li>An email made entirely of pictures from someone they rarely hear from, or with an attachment from someone new, is held back.</li>
+      </ul>
+    </div>
+
     <div class="how-section fade-up d4">
-      <h2>What the family manager sees... and doesn't</h2>
-      <p>When an email is flagged for review or blocked, the family manager receives a plain English summary: who sent it, what it claimed to be, why it was flagged, and what threat signals fired. One tap to release it to the inbox. One tap to confirm the block.</p>
-
-      <div class="callout">
-        The body of the email is never shared with the family manager. Not the text, not the links, not the attachments. The protected person's inbox content stays completely private... even from the person managing their protection.
+      <h2>What you see, and what you don’t</h2>
+      <p>When Quiet holds an email back, you get a short email alert. Your dashboard shows who sent it, when it arrived, and what Quiet decided and why, in Quiet’s own words. You also see which senders they trust, block, or hear from often; how often each one writes, and how often they reply; and how much marketing they receive.</p>
+      <div class="callout protect-callout">
+        You never see the subject line, the message or any attachment. That is deliberate. Quiet Protect exists to keep scams out, not to give anyone a window into someone else’s private letters.
       </div>
-
-      <p>This is not a technical limitation. It is a deliberate design decision. The purpose of Quiet Protect is to protect against email threats, not to give family members a window into someone's private correspondence. Those are very different things, and conflating them would undermine the dignity and independence of the person being protected.</p>
     </div>
 
-    <!-- KNOWN LIMITATIONS -->
+    <div class="how-section fade-up d4">
+      <h2>When you release or block an email</h2>
+      <p>Your decisions are recorded. Releasing one email doesn’t teach Quiet to let similar emails through: if you want a sender’s emails to arrive, mark them as trusted. Blocking a sender holds back their future emails.</p>
+    </div>
+
     <div class="how-section fade-up d5">
-      <h2>What we can't do yet. And why we say so</h2>
-      <p>There are things it cannot currently do, and we think it's important to say so clearly rather than paper over them.</p>
-
+      <h2>What it can’t do yet</h2>
+      <p>There are things Quiet can’t do yet, and we would rather say so plainly.</p>
       <div class="limitation">
-        <strong>Attachment content scanning</strong>
-        <p>The engine knows an attachment is present and who sent it. It cannot inspect what is inside it. Attachments from unknown senders are always routed to Review, which is the honest response to an incomplete assessment. Full attachment scanning is a later capability.</p>
+        <strong>It won’t catch everything</strong>
+        <p>No email check does. When Quiet isn’t sure, it holds the email back for you rather than guessing.</p>
       </div>
       <div class="limitation">
-        <strong>Image-only emails</strong>
-        <p>Some scam emails are constructed entirely as images. The text you see is part of a graphic, not readable by the engine. Structural signals still fire, but complete protection cannot be guaranteed for this pattern. It's logged as a known gap.</p>
+        <strong>It doesn’t look inside attachments</strong>
+        <p>Quiet knows an attachment is there and who sent it, but it doesn’t read what is inside. That is why attachments from someone new are held back for you.</p>
       </div>
       <div class="limitation">
-        <strong>Microsoft 365 only at this stage</strong>
-        <p>The email integration uses Microsoft Graph API. Gmail and other providers are on the roadmap but not in the first version.</p>
+        <strong>Emails made of pictures are hard to check</strong>
+        <p>Some scams are a single image, with no text for Quiet to read. Quiet holds these back when they come from someone they rarely hear from, but it can’t check what the picture says.</p>
       </div>
-
-      <p style="margin-top: 20px;">The family manager override log is a calibration signal, not an automatic correction. If a family manager releases a blocked email, that decision is recorded and reviewed periodically, but it does not automatically adjust the scoring. Family managers may themselves make poor calls, and the system is designed to account for that.</p>
+      <div class="limitation">
+        <strong>Microsoft email accounts only, for now</strong>
+        <p>Quiet Protect works with Outlook.com, Hotmail, Live and Microsoft 365 accounts today. Gmail and Yahoo need Google’s and Yahoo’s approval first.</p>
+      </div>
 
       <div class="btn-group" style="margin-top: 28px;">
-        <a href="/quiet-protect.html" class="btn btn-primary protect-btn">Learn more about Quiet Protect</a>
-        <a href="https://tally.so/r/0QJkjy" class="btn btn-secondary" target="_blank" rel="noopener">Get access</a>
+        <a href="/quiet-protect.html" class="btn btn-secondary">More about Quiet Protect</a>
+        <a href="/privacy" class="btn btn-secondary">Privacy notice</a>
       </div>
     </div>
 
   </main>
 
   <footer>
-    <p>Quiet is in active development. Get in touch at <a href="mailto:chris@getquiet.co.uk">chris@getquiet.co.uk</a></p>
-    <p style="margin-top: 8px;">© 2026 Aegient Ltd &nbsp;·&nbsp; Registered in England and Wales &nbsp;·&nbsp; Company No. 17154349 &nbsp;·&nbsp; <a href="/privacy">Privacy notice</a></p>
+    <p class="footer-status">Quiet Protect is running in a small family pilot and is not open for sign-up yet.</p>
+    <p>Questions: <a href="mailto:hello@getquiet.co.uk">hello@getquiet.co.uk</a> &nbsp;·&nbsp; <a href="/privacy">Privacy notice</a> &nbsp;·&nbsp; <a href="/quiet.html">Quiet, our email triage product</a></p>
+    <p>© 2026 Aegient Ltd. Registered in England and Wales, company number 17154349.</p>
+    <p>Registered office: 3a Park Avenue, Lytham St Annes, Lancashire, FY8 5QU.</p>
   </footer>
   <script src="/js/site.js"></script>
 
