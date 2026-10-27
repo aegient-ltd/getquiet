@@ -19,3 +19,8 @@ logo-concepts.html
 ui/
 assets/docs/
 assets/audio/
+
+# TASK-108: the Worker script and local dev secrets must never be served as
+# assets (the assets directory is the repository root).
+worker/
+.dev.vars

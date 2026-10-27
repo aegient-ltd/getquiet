@@ -7,9 +7,32 @@
   "observability": {
     "enabled": true
   },
+  // The scam-alert sign-up route (TASK-108, ADL-213 §3.2) is the site's only
+  // server-side code. Only its path runs the script first; every other
+  // request stays asset-first. EMAILOCTOPUS_API_KEY is a Worker secret set
+  // with `npx wrangler secret put`, never in this repository.
+  "main": "worker/index.js",
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": ["/scam-alerts/signup"]
   },
+  "vars": {
+    "EMAILOCTOPUS_LIST_ID": "946f46d6-d156-11f1-8c44-01300d7d99f3"
+  },
+  "ratelimits": [
+    {
+      "name": "SIGNUP_RATE_LIMITER",
+      "namespace_id": "1001",
+      // 10 sign-up submissions a minute per IP, per Cloudflare location
+      // (approximate by design). Over the limit gets the "Too many tries"
+      // answer. Period must be 10 or 60.
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    }
+  ],
   "compatibility_flags": [
     "nodejs_compat"
   ]
