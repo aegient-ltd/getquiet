@@ -27,7 +27,10 @@
 
 const SIGNUP_PATH = "/scam-alerts/signup";
 const SIGNUP_PAGE = "/scam-alerts.html";
-const CHECK_EMAIL_PAGE = "/scam-alerts-check-your-email.html";
+// Redirect targets use the extensionless canonical form, so the browser is
+// not bounced through the asset router's 307 on the .html form.
+const SIGNUP_REDIRECT = "/scam-alerts";
+const CHECK_EMAIL_REDIRECT = "/scam-alerts-check-your-email";
 const WORDING_VERSION_TAG = "signup-form-v1";
 
 // The provider question's stored values (copy spec §7.2, decision 548).
@@ -64,7 +67,7 @@ export default {
     }
 
     if (request.method === "GET" || request.method === "HEAD") {
-      return redirect(url, SIGNUP_PAGE);
+      return redirect(url, SIGNUP_REDIRECT);
     }
     if (request.method !== "POST") {
       return new Response("Method not allowed", { status: 405 });
@@ -92,7 +95,7 @@ export default {
     // A filled-in honeypot creates nothing and answers like any other
     // submission (copy spec §2 and §7.3).
     if (honeypotFilled) {
-      return redirect(url, CHECK_EMAIL_PAGE);
+      return redirect(url, CHECK_EMAIL_REDIRECT);
     }
 
     if (!consentTicked) {
@@ -100,7 +103,7 @@ export default {
     }
 
     if (!isPlausibleEmail(email)) {
-      return errorPage(request, env, ERRORS.badAddress, 400, { email });
+      return errorPage(request, env, ERRORS.badAddress, 400, { email, consentTicked });
     }
 
     const body = {
@@ -137,7 +140,7 @@ export default {
     // 409 means the address is already on the list; it gets the same answer
     // as a fresh sign-up (copy spec §2).
     if (response.ok || response.status === 409) {
-      return redirect(url, CHECK_EMAIL_PAGE);
+      return redirect(url, CHECK_EMAIL_REDIRECT);
     }
 
     console.error(`signup: EmailOctopus returned ${response.status}`);
