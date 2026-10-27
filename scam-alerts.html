@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weekly scam alerts | Quiet Protect</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="A free weekly email about the scams going round, with simple words to warn the person you look out for." />
+  <link rel="canonical" href="https://getquiet.co.uk/scam-alerts" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Quiet" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:url" content="https://getquiet.co.uk/scam-alerts" />
+  <meta property="og:title" content="Weekly scam alerts from Quiet Protect" />
+  <meta property="og:description" content="A free weekly email about the scams going round, with simple words to warn the person you look out for." />
+  <meta property="og:image" content="https://getquiet.co.uk/assets/social/quietprotect-share-1200x630.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Quiet Protect. Email protection for older and vulnerable people, with family in the loop. getquiet.co.uk" />
+  <meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">Quiet<span>.</span></a>
+      <button class="nav-hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="/quiet-protect.html">Quiet Protect</a>
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-header fade-up">
+    <span class="pill-tag protect-tag">Free weekly email</span>
+    <h1 class="page-title">Weekly scam alerts</h1>
+    <p class="page-subtitle">One short email a week about a scam that’s going round, and simple words you can use to warn the person you look out for.</p>
+    <p class="page-subtitle" style="margin-top: 10px;">Written for family members and carers. It’s free, and you can unsubscribe at any time.</p>
+  </header>
+
+  <hr class="divider" />
+
+  <main>
+
+    <div class="card protect fade-up d1">
+      <h2>What you’ll get</h2>
+      <ul class="points">
+        <li>A real scam that’s going round now, and how to spot it.</li>
+        <li>What to do if it reaches someone you care for.</li>
+        <li>Simple words to warn the person you look out for.</li>
+      </ul>
+    </div>
+
+    <div class="card protect fade-up d2">
+      <!-- The route answers an error by returning this page with the message
+           below injected and unhidden (worker/index.js), so the form works
+           with JavaScript off. -->
+      <form method="post" action="/scam-alerts/signup">
+        <div class="form-error" data-form-error role="alert" hidden></div>
+
+        <div class="form-field">
+          <label for="email">Your email address</label>
+          <input type="email" id="email" name="email" required autocomplete="email" maxlength="254" />
+        </div>
+
+        <div class="form-field">
+          <label for="provider">Which email provider does the person you look out for use? (optional)</label>
+          <select id="provider" name="provider">
+            <option value="" selected></option>
+            <option value="gmail">Gmail</option>
+            <option value="microsoft">Outlook, Hotmail or Live</option>
+            <option value="yahoo_aol">Yahoo or AOL</option>
+            <option value="bt">BT</option>
+            <option value="sky">Sky</option>
+            <option value="icloud">iCloud</option>
+            <option value="other">Another provider</option>
+            <option value="not_sure">Not sure</option>
+          </select>
+          <p class="form-help">We ask so we know which email services to support first. You can leave this blank.</p>
+        </div>
+
+        <!-- Honeypot: off-screen, never shown. A filled-in field creates
+             nothing and gets the same answer as any other submission. -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="website">Please leave this field empty</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="form-consent">
+          <input type="checkbox" id="consent" name="consent" value="yes" required />
+          <div>
+            <label for="consent">Yes, send me the weekly scam-alert email from Quiet Protect.</label>
+            <p class="form-beside">A weekly email about scams, with advice and occasional news about Quiet Protect. Quiet Protect is run by Aegient Ltd. <a href="/privacy#our-scam-alert-email">How we use your email address</a></p>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary protect-btn">Sign up</button>
+      </form>
+    </div>
+
+  </main>
+
+  <footer>
+    <p class="footer-status">Quiet Protect is running in a small family pilot and is not yet open to new families.</p>
+    <p>Questions: <a href="mailto:hello@getquiet.co.uk">hello@getquiet.co.uk</a> &nbsp;·&nbsp; <a href="/privacy">Privacy notice</a> &nbsp;·&nbsp; <a href="/quiet.html">Quiet, our email triage product</a></p>
+    <p>© 2026 Aegient Ltd. Registered in England and Wales, company number 17154349.</p>
+    <p>Registered office: 3a Park Avenue, Lytham St Annes, Lancashire, FY8 5QU.</p>
+  </footer>
+  <script src="/js/site.js"></script>
+
+</body>
+</html>
