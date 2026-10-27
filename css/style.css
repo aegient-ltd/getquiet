@@ -986,3 +986,92 @@ main a { color: inherit; text-decoration: underline; }
   .privacy-note { color: #A9C6EE; }
   .callout.protect-callout { color: #A9C6EE; }
 }
+
+/* ── TASK-108 FORM COMPONENTS ──
+   The scam-alert sign-up form (scam-alerts.html). Text keeps the existing
+   ink tokens, so every text-on-background pair is one already verified at
+   TASK-107; the error banner's red and the focus ring are borders only,
+   which carry no contrast requirement. */
+.form-field { margin: 18px 0; }
+.form-field label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.form-field input[type="email"],
+.form-field select {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+}
+.form-field input[type="email"]:focus,
+.form-field select:focus {
+  outline: 2px solid var(--protect);
+  outline-offset: 1px;
+  border-color: var(--protect);
+}
+.form-help {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 6px;
+  line-height: 1.6;
+}
+.form-consent {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 22px 0;
+}
+.form-consent input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  accent-color: var(--protect);
+  flex-shrink: 0;
+}
+.form-consent label {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.form-beside {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 6px;
+  line-height: 1.6;
+}
+.form-error {
+  border-left: 3px solid #B3401F;
+  background: var(--bg);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  font-size: 0.925rem;
+  color: var(--ink);
+  line-height: 1.6;
+}
+/* Honeypot: removed from view and the tab order but present in the DOM for
+   bots that fill every field (worker/index.js answers a filled-in field like
+   any other submission and creates nothing). */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  .form-error { border-left-color: #D96A45; }
+}
