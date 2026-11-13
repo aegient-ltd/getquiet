@@ -7,22 +7,33 @@
  * email; nothing else is sent until the person confirms). Every other
  * request falls through to the static assets.
  *
- * Privacy invariants (ADL-213 §3.2, record of processing B7):
- *  - No log line ever carries an email address or a provider answer.
- *    Observability is on for this Worker, so nothing dynamic is logged
- *    except upstream HTTP status codes.
+ * Privacy invariants (ADL-213 §3.2 and §9, record of processing B5 and B7):
+ *  - No log line ever carries an email address, a provider answer, a
+ *    Turnstile token or an IP address. Observability is on for this
+ *    Worker, so nothing dynamic is logged except upstream HTTP status
+ *    codes and Cloudflare's own siteverify error codes (ADL-213 §9.3).
  *  - An address already on the list (EmailOctopus 409) and a filled-in
  *    honeypot both get the same answer as a fresh sign-up, so the form
  *    cannot be used to test whether an address is subscribed and a bot
  *    learns nothing. The honeypot creates no contact.
+ *  - The bot check (ADL-213 §9.2): the Turnstile token is verified with
+ *    Cloudflare's siteverify after the honeypot and before the consent
+ *    and address checks, with one attempt and a 10 second timeout, and
+ *    it fails closed. No call to EmailOctopus is made unless the check
+ *    has passed with the expected hostname and action.
  *
- * Works with JavaScript off: success is a 303 redirect to the
- * check-your-email page; a failure returns the sign-up page itself with
- * the error injected server-side (HTMLRewriter) and the email re-filled.
+ * JavaScript: error answers are still rendered server-side (HTMLRewriter)
+ * with the email re-filled, and success is a 303 redirect to the
+ * check-your-email page, but a successful sign-up now needs JavaScript
+ * for the Turnstile widget (ADL-213 §9.5); the page says so.
  *
  * Bindings (wrangler.jsonc): ASSETS (static assets), SIGNUP_RATE_LIMITER
- * (10 submissions a minute per IP), EMAILOCTOPUS_LIST_ID (plain var),
- * EMAILOCTOPUS_API_KEY (Worker secret, never in the repository).
+ * (10 submissions a minute per IP), EMAILOCTOPUS_LIST_ID,
+ * TURNSTILE_EXPECTED_HOSTNAME and TURNSTILE_EXPECTED_ACTION (plain vars;
+ * the expected values are vars because Cloudflare's dummy secrets answer
+ * with hostname example.com and no action, so .dev.vars overrides both
+ * for the local walk), EMAILOCTOPUS_API_KEY and TURNSTILE_SECRET_KEY
+ * (Worker secrets, never in the repository).
  */
 
 const SIGNUP_PATH = "/scam-alerts/signup";
@@ -32,6 +43,18 @@ const SIGNUP_PAGE = "/scam-alerts.html";
 const SIGNUP_REDIRECT = "/scam-alerts";
 const CHECK_EMAIL_REDIRECT = "/scam-alerts-check-your-email";
 const WORDING_VERSION_TAG = "signup-form-v1";
+
+// The bot check (ADL-213 §9.2).
+const TURNSTILE_SITEVERIFY_URL =
+  "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+// Siteverify error codes that mean the visitor's token was missing, bad or
+// spent: these get the "couldn't check" answer. Any other failure (a secret
+// error, bad-request, internal-error, an unknown code) is our side.
+const TURNSTILE_VISITOR_ERROR_CODES = new Set([
+  "missing-input-response",
+  "invalid-input-response",
+  "timeout-or-duplicate",
+]);
 
 // The provider question's stored values (copy spec §7.2, decision 548).
 const PROVIDER_VALUES = new Set([
@@ -52,6 +75,8 @@ const ERRORS = {
   boxNotTicked:
     "Please tick the box to say you’d like the email. We can’t sign you up without it.",
   tooManyTries: "Please wait a few minutes and try again.",
+  checkFailed:
+    "We couldn’t check that you’re a person. Please make sure JavaScript is turned on and try again. If it keeps happening, email hello@getquiet.co.uk.",
   ourFault:
     "Something went wrong on our side and we couldn’t sign you up. Please try again later, or email hello@getquiet.co.uk.",
 };
@@ -96,6 +121,17 @@ export default {
     // submission (copy spec §2 and §7.3).
     if (honeypotFilled) {
       return redirect(url, CHECK_EMAIL_REDIRECT);
+    }
+
+    // The bot check (ADL-213 §9.2): after the honeypot, before the consent
+    // and address checks. Fails closed; the error page carries a fresh
+    // widget, so a person can simply try again.
+    const token = (form.get("cf-turnstile-response") ?? "").toString();
+    const check = await verifyTurnstileToken(token, env);
+    if (check !== "passed") {
+      return check === "failed"
+        ? errorPage(request, env, ERRORS.checkFailed, 403, { email, consentTicked })
+        : errorPage(request, env, ERRORS.ourFault, 500, { email, consentTicked });
     }
 
     if (!consentTicked) {
@@ -147,6 +183,67 @@ export default {
     return errorPage(request, env, ERRORS.ourFault, 500, { email, consentTicked });
   },
 };
+
+/**
+ * Verifies the form's Turnstile token with Cloudflare's siteverify
+ * (ADL-213 §9.2): one attempt, a 10 second timeout, no remoteip. Returns
+ * "passed", "failed" (the visitor's token was missing, bad, spent, or for
+ * the wrong hostname or action: the "couldn't check" answer) or "ourFault"
+ * (siteverify unreachable, timed out, malformed, or any other error: the
+ * "our side" answer). Logs fixed text and Cloudflare's error codes only
+ * (§9.3): never the token.
+ */
+async function verifyTurnstileToken(token, env) {
+  // Siteverify caps tokens at 2048 characters; an empty or oversized one
+  // cannot pass, so it is refused without a call.
+  if (token === "" || token.length > 2048) {
+    console.error("signup: turnstile token missing or malformed");
+    return "failed";
+  }
+
+  let response;
+  try {
+    response = await fetch(TURNSTILE_SITEVERIFY_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        secret: env.TURNSTILE_SECRET_KEY ?? "",
+        response: token,
+      }),
+      signal: AbortSignal.timeout(10_000),
+    });
+  } catch {
+    console.error("signup: turnstile siteverify unreachable or timed out");
+    return "ourFault";
+  }
+
+  let data;
+  try {
+    data = await response.json();
+  } catch {
+    console.error("signup: turnstile siteverify answer malformed");
+    return "ourFault";
+  }
+
+  if (data.success === true) {
+    // Dummy-secret answers carry hostname example.com and no action, so
+    // both expected values are plain vars overridden in .dev.vars.
+    if (
+      (data.hostname ?? "") === env.TURNSTILE_EXPECTED_HOSTNAME &&
+      (data.action ?? "") === env.TURNSTILE_EXPECTED_ACTION
+    ) {
+      return "passed";
+    }
+    console.error("signup: turnstile hostname or action mismatch");
+    return "failed";
+  }
+
+  const codes = Array.isArray(data["error-codes"]) ? data["error-codes"] : [];
+  console.error(`signup: turnstile check failed [${codes.join(",")}]`);
+  return codes.some((code) => TURNSTILE_VISITOR_ERROR_CODES.has(code))
+    ? "failed"
+    : "ourFault";
+}
 
 /** 303 so the browser follows with a GET and a refresh never re-posts. */
 function redirect(url, path) {

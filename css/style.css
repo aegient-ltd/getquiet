@@ -1060,6 +1060,11 @@ main a { color: inherit; text-decoration: underline; }
   color: var(--ink);
   line-height: 1.6;
 }
+/* The Turnstile widget (ADL-213 §9.1): spacing only, matching the consent
+   block above it; the widget draws itself. With JavaScript off the div is
+   empty and the noscript line beside it shows instead. */
+.cf-turnstile { margin: 0 0 22px; }
+
 /* Honeypot: removed from view and the tab order but present in the DOM for
    bots that fill every field (worker/index.js answers a filled-in field like
    any other submission and creates nothing). */
