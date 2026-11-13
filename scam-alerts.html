@@ -20,6 +20,10 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Quiet Protect. Email protection for older and vulnerable people, with family in the loop. getquiet.co.uk" />
   <meta name="twitter:card" content="summary_large_image" />
+  <!-- The sign-up check, Cloudflare Turnstile (ADL-213 §9): the one
+       third-party script on the site, on this page only (§9.4). Must load
+       from this exact URL; proxying or caching it breaks Turnstile. -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -99,6 +103,12 @@
             <p class="form-beside">A weekly email about scams, with advice and occasional news about Quiet Protect. Quiet Protect is run by Aegient Ltd. <a href="/privacy#our-scam-alert-email">How we use your email address</a></p>
           </div>
         </div>
+
+        <!-- The bot check (ADL-213 §9.1): Managed mode, this page only.
+             Implicit rendering adds a hidden cf-turnstile-response field
+             that worker/index.js verifies before anything is created. -->
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAF_vTNioLXruviXV" data-action="scam-alert-signup"></div>
+        <noscript><p class="form-help">To sign up, please turn on JavaScript. The page uses it for a quick check that you’re a person and not an automated program.</p></noscript>
 
         <button type="submit" class="btn btn-primary protect-btn">Sign up</button>
       </form>
