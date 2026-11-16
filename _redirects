@@ -4,6 +4,15 @@
 # then splats, per the Workers static assets _redirects documentation.
 /prototypes.html / 301
 /logo-concepts.html / 301
+
+# The latest scam-alert issue (ADL-210 §8 condition 5; ADL-213 §3.5): a fixed
+# address on getquiet.co.uk for the newest issue's EmailOctopus online
+# version, linked from /scam-alerts. Changed to the new issue's online
+# version on the day of each send. 302, so nothing caches the old target.
+# Issue one, sent 16 November 2026.
+/scam-alerts/latest https://eocampaign1.com/web-version?p=5c7953b2-e1b8-11f1-8e33-5d977755fb6a&pt=campaign&t=1794832241&s=69c89f116654e7dd6e3d3cf819c70bff5f7e8c062f2a661b1de8d5cdb3e2ce5b 302
+
+# Splats last.
 /ui/* / 301
 /assets/docs/* / 301
 /assets/audio/* / 301
